@@ -3,3 +3,6 @@ node_modules
 #Variables de entorno
 .env
 #Carpeta de producción
+
+#database.js
+database.js
