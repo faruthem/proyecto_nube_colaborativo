@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 //inicializaciones de código, contantes
 const app = express(); //Lo almacenamos en una constante app
-
+require('./database'); //inicializamos la base de datos <--------- aquí se da el mensaje ji ji ji
 //settings
 app.set('port', process.env.PORT || 3000); // process.env.PORT = si existe un puerto en mi servidor, no seas malo y tómalo, si no encuentras un puerto
                                             //toma el local que va a ser el 3000
@@ -14,11 +14,11 @@ app.set('port', process.env.PORT || 3000); // process.env.PORT = si existe un pu
 //Aquí van nuestros archivos html   (handerbals)                                          
 app.set('views', path.join(__dirname, 'views'));//Le digo donde están las vistas y concateno con _dirname 
 
-app.engine('.hbs', exphbs({ //Configuramos como vamos a utilizar las vistas con plantillas o diseños
+app.engine('.hbs', exphbs.engine({ //Configuramos como vamos a utilizar las vistas con plantillas o diseños
     defaultLayout:'main',
     layoutsDir: path.join(app.get('views'), 'layouts'), // dirección para que encuentre layouts / main
     partialsDir: path.join(app.get('views'), 'partials'),// dirección para que encuentre layouts / main/partials
-    extname: '.hbs' //Dirección/extensión de mis archivos
+    extname: '.hbs', //Dirección/extensión de mis archivos
 }));//
 app.set('view engine', '.hbs');//Configuro motor de las vistas
 
@@ -33,11 +33,17 @@ app.use(session({                   //con esto autentico al usuario y guardo su 
 
 //Variables globales (poder colocar datos que queremos que estén accesibles desde cualquier parte del server)
 
-//Routes (Marca ls rutas de nuestros archivos)
+//Routes (Marca ls rutas de nuestros archivos y cómo y donde llamarlos)
+app.use(require('./routes/index')); //rutas de servidor
+app.use(require('./routes/notes')); //rutas de servidor
+app.use(require('./routes/users')); //rutas de servidor
 
 
 
 //Static Files (dirección archivos estáticos)
+app.use(express.static(path.join(__dirname, 'public'))); // estamos ubicando nuestra carpeta public
+
+
 
 //Server is listenning (parte de configuración del servidor)
 app.listen(app.get('port'), () => {
