@@ -11,4 +11,10 @@ router.get('/about', (req, res) => {
     //res.send('baia baia es mi About poderoso');
     res.render('about.hbs');
 });
+
+router.get('/news', (req, res) => {
+    //res.send('baia baia es mi About poderoso');
+    res.render('news.hbs');
+});
+
 module.exports = router;
