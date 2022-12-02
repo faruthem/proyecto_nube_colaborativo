@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose');
 const { Schema } = mongoose;
 //Aquí le estoy diciendo como van a lucier mis datos
-
+//Modelo de datos
 const NoteSchema = new Schema ({
     title: {type: String, requiered: true},
     description: { type: String, requiered: true},
