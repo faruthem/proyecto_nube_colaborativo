@@ -4,6 +4,7 @@ const path = require('path'); //Une directorios
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const flash = require('connect-flash');
 //inicializaciones de código, contantes
 const app = express(); //Lo almacenamos en una constante app
 require('./database'); //inicializamos la base de datos <--------- aquí se da el mensaje ji ji ji
@@ -30,8 +31,17 @@ app.use(session({                   //con esto autentico al usuario y guardo su 
     resave: true,
     saveUninitialized: true
 }));
+app.use(flash());//Esto es para poder usar flash y poder mandar esas alertas 
 
 //Variables globales (poder colocar datos que queremos que estén accesibles desde cualquier parte del server)
+//Variable globarl que almacena mensajes flash
+app.use((req,res,next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+
+    next();
+});
+
 
 //Routes (Marca ls rutas de nuestros archivos y cómo y donde llamarlos)
 app.use(require('./routes/index')); //rutas de servidor
