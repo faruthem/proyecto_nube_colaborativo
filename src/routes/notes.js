@@ -13,7 +13,7 @@ router.get('/notes/add', (req,res)=>{
 //Aquí termino a crear mi formulario
 
 //ruta para enviar datos
-router.post('/notes/new-note', async (req,res) => {
+router.post('/notes/new-note', async (req,res) => {// agregando async digo que va a ser un proceso asincrono 
     const {title, description}=req.body;
     const errors = [];
     if(!title) {
@@ -32,7 +32,8 @@ router.post('/notes/new-note', async (req,res) => {
         //res.send('Sugerencia enviada');
         const newNote = new Note({title, description});
         //console.log(newNote);
-        await newNote.save();
+        await newNote.save(); // Le agrego away para que se haga asincrono
+        req.flash('success_msg','Sugerencia agregada')
         //res.send('Sugerencia enviada y recibida');
         res.redirect('/notes')
     }
@@ -40,9 +41,30 @@ router.post('/notes/new-note', async (req,res) => {
 });
 //ruta para enviar datos
 
-router.get('/notes', (req, res) =>{
-    res.send('Notitas bonitas de la base de datos de los hurones más hermosos todavía')
+router.get('/notes', async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
+   const notes = await Note.find().lean().sort({date: 'desc'});// SE agregó. lean para que handlebars me permita visualizar estos datos
+   res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
+    //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
     //res.render('notas')//aquí va a buscar mis notas
 });
+//Ruta para editar mi buzón de sugerencias 
+router.get('/notes/edit/:id', async (req, res)=>{
+    const note = await Note.findById(req.params.id).lean();//Agregué lean para que me mande los datos
+    res.render('notes/edit-note',{note});
+});
 
+// Ruta de edición de mi buzón de sugerencias por metodo put
+router.put('/notes/edit-note/:id',async (req,res) => {
+    const {title,description}= req.body;
+    await Note.findByIdAndUpdate(req.params.id,{title,description});
+    req.flash('success_msg', 'Sugerencia modificada');
+    res.redirect('/notes');
+});
+
+// Ruta de eliminación de mi buzón de sugerencias
+router.delete('/notes/delete/:id',async (req,res) => {
+    await Note.findByIdAndRemove(req.params.id);
+    req.flash('success_msg', 'Sugerencia eliminada ');
+    res.redirect('/notes');
+});
 module.exports = router;
