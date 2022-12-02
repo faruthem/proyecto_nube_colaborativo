@@ -4,3 +4,16 @@ body {
     background: linear-gradient(to right, #ffffff, #abbaab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+
+/*.container-max-widths {
+    background: #aa3b3b;
+    border: 5px solid darkblue;
+    height: 150px;
+    width: 200px;
+}*/
+/*
+.card {
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px; 
+}*/
