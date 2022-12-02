@@ -1,0 +1,33 @@
+{{!--//Aquí se listan todas las quejas y sugerencias : D--}}
+
+{{!--//Aokay gente vamos a pintar nuestras notas: D--}}
+<div class="row">
+   {{#each notes}} {{!con each recorremos nuestro arreglo buzón de sugerencia}}
+    <div class="col-md-3">
+        <div class="car">
+            <div class="car-body">
+                <h4 class="card-title d-flex justify-content-between align-items-center">
+                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-edit"></i></a>
+                </h4>
+                <p>{{description}}</p>
+                <form action="/notes/delete/{{_id}}?_method=DELETE" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-danger btn-block btn-sm" type="submit">{{!botón }}
+                                         Borrar
+                                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="container-max-widths">
+           <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <p class="card-text">No hay quejas ni sugerencias ¿FELICIDAD, ERES TÚ?</p> {{!clase lead nos permite resaltar}} 
+            <a href="/notes/add" class="btn btn-success btn-block"> Sugerir siempre es bueno, intentalo</a>
+        </div>
+    </div>     
+    </div>
+
+   {{/each}}
+</div>
