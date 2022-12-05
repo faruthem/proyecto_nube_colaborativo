@@ -1,20 +1,31 @@
 //Usuario puede acceder a las URL para autenticarse login,logout, register,
 const express = require('express');
+//const passport = require('passport');
 const router = express.Router(); // ejecuta método  Router= creación de rutas
+
 const User = require('../models/User'); // importo mi esquema de usuarios YUJU!!
+const passport = require('passport'); // importamos para poder usar estrategy de autentication
+
 
 router.get('/users/signin', (req, res)=>{// esto sirve para que el usuario ingrese a la aplicación 
     res.render('users/signin'); //Con render lo envio ya de mi ruta y con send lo muestro, es un simple texto
 });
 
-//router.get('/users/signup', (req, res) => {
-    //res.send('form of authentication of ferrets');
-//    res.render('users/signup');
-//});
+//Lo de arriba es solo para poder ver mi modelo y llamarlo ahora lo voy a llamar con el método post
+router.post('/users/signin',passport.authenticate('local', {
+    successRedirect: '/notes',//Si todo sale bien ¿ a dónde lo redirecciono?
+    failureRedirect: '/users/signin', //Si sale mal pues me lo mandas aquí
+    failureFlash: true
+})); //local = la manera en que se va a autenticar el usuario
+
+router.get('/users/signup', (req, res) => {
+    res.render('users/signup');
+});
 //Vamos a crear otra ruta para el registro (signup para los gringos)
 router.post('/users/signup', async (req, res) => {
     const { name, email, password, confirm_password} = req.body;
     const errors = [];
+    //console.log(req.body)// Recuerda quitar este para no ver los datos despues
     if (name.length <=0) {
         errors.push({text: 'Por favor inserta un nombre'});
     }
@@ -35,7 +46,7 @@ router.post('/users/signup', async (req, res) => {
     }else{
         const emailUser = await User.findOne({email: email}); //en caso de correo duplicado aquí estoy papá
         if (emailUser) {
-            req.flash('ADVERTENCIA, el correo ya está registrado');
+            req.flash('error_msg','ADVERTENCIA, el correo ya está registrado');
             res.redirect('/users/signup');
         }
         const newUser = new User({name, email, password});//Creo objeto llamado newUser
