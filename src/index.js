@@ -1,17 +1,19 @@
 //Aquí va a correr el servidor
 const express = require('express');
 const path = require('path'); //Une directorios
-const exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars'); //Nos permite usar los formatos de handlebars
 const methodOverride = require('method-override');
-const session = require('express-session');
-const flash = require('connect-flash');
+const session = require('express-session'); //Para mis sesiones
+const flash = require('connect-flash'); //Esto nos sirve para las alertas
+const passport = require('passport');//Esto nos sirve para el login
 //inicializaciones de código, contantes
 const app = express(); //Lo almacenamos en una constante app
 require('./database'); //inicializamos la base de datos <--------- aquí se da el mensaje ji ji ji
+require('./config/passport'); //Vamos a utilizar o llamar a nuestra autenticación
+
 //settings
 app.set('port', process.env.PORT || 3000); // process.env.PORT = si existe un puerto en mi servidor, no seas malo y tómalo, si no encuentras un puerto
                                             //toma el local que va a ser el 3000
-
 //Aquí van nuestros archivos html   (handerbals)                                          
 app.set('views', path.join(__dirname, 'views'));//Le digo donde están las vistas y concateno con _dirname 
 
@@ -31,6 +33,9 @@ app.use(session({                   //con esto autentico al usuario y guardo su 
     resave: true,
     saveUninitialized: true
 }));
+
+app.use(passport.initialize());//Aquí lo inicializo
+app.use(passport.session());//Utilizo la sesion de arriba definida por express
 app.use(flash());//Esto es para poder usar flash y poder mandar esas alertas 
 
 //Variables globales (poder colocar datos que queremos que estén accesibles desde cualquier parte del server)
@@ -38,6 +43,7 @@ app.use(flash());//Esto es para poder usar flash y poder mandar esas alertas
 app.use((req,res,next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');//Para que me muestre los errores del login
 
     next();
 });
