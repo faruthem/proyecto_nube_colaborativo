@@ -24,8 +24,16 @@ passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 //tomamos un ID y generamos un usuario yeee
-passport.deserializeUser((id, done) =>{ //Si existe la sessión del usuario buscalo cuando lo encuentras retornalo
-   User.findById(id, (err, user) => {
-    done(err, user);//Usamos un Id y traemos los datos del usuario
-   });
+//passport.deserializeUser((id, done) =>{ //Si existe la sessión del usuario buscalo cuando lo encuentras retornalo
+//   User.findById(id, (err, user) => {
+//    done(err, user);//Usamos un Id y traemos los datos del usuario
+//   });
+//});
+//Se cambió por esto para poder enviar datos de mi función
+passport.deserializeUser(function (id, done) {
+  User.findById(id)
+    .lean()
+    .exec(function (err, user) {
+      done(err, user);
+    });
 });
