@@ -1,19 +1,19 @@
 //Aqui vienene las rutas de mi servidor para que el usuaio pueda crear o manejar sus notas (crear, eliminar, actualizar)
-
 const express = require('express');
 const router = express.Router(); // ejecuta método  Router= creación de rutas
 //requiero mis esquemas para almacenarlos
 const Note = require('../models/Note');
 
+const { isAuthenticated } = require('../helpers/auth');//Revisa si estoy logiado y si no me redirige
 
 //Aquí comienzo a crear mi formulario
-router.get('/notes/add', (req,res)=>{
+router.get('/notes/add', isAuthenticated, (req,res)=>{
     res.render('notes/new-note');
-})
+});
 //Aquí termino a crear mi formulario
 
 //ruta para enviar datos
-router.post('/notes/new-note', async (req,res) => {// agregando async digo que va a ser un proceso asincrono 
+router.post('/notes/new-note',isAuthenticated, async (req,res) => {// agregando async digo que va a ser un proceso asincrono 
     const {title, description}=req.body;
     const errors = [];
     if(!title) {
@@ -31,6 +31,7 @@ router.post('/notes/new-note', async (req,res) => {// agregando async digo que v
     }else{
         //res.send('Sugerencia enviada');
         const newNote = new Note({title, description});
+        newNote.user = req.user.id;//sugerencias enlazadas con cada usuario
         //console.log(newNote);
         await newNote.save(); // Le agrego away para que se haga asincrono
         req.flash('success_msg','Sugerencia agregada')
@@ -40,21 +41,20 @@ router.post('/notes/new-note', async (req,res) => {// agregando async digo que v
     
 });
 //ruta para enviar datos
-
-router.get('/notes', async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
-   const notes = await Note.find().lean().sort({date: 'desc'});// SE agregó. lean para que handlebars me permita visualizar estos datos
+router.get('/notes', isAuthenticated, async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
+   const notes = await Note.find({user: req.user.id}).sort({date: 'desc'});// SE agregó. lean para que handlebars me permita visualizar estos datos
    res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
     //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
     //res.render('notas')//aquí va a buscar mis notas
 });
 //Ruta para editar mi buzón de sugerencias 
-router.get('/notes/edit/:id', async (req, res)=>{
+router.get('/notes/edit/:id', isAuthenticated, async (req, res)=>{
     const note = await Note.findById(req.params.id).lean();//Agregué lean para que me mande los datos
     res.render('notes/edit-note',{note});
 });
 
 // Ruta de edición de mi buzón de sugerencias por metodo put
-router.put('/notes/edit-note/:id',async (req,res) => {
+router.put('/notes/edit-note/:id', isAuthenticated, async (req,res) => {
     const {title,description}= req.body;
     await Note.findByIdAndUpdate(req.params.id,{title,description});
     req.flash('success_msg', 'Sugerencia modificada');
@@ -62,7 +62,7 @@ router.put('/notes/edit-note/:id',async (req,res) => {
 });
 
 // Ruta de eliminación de mi buzón de sugerencias
-router.delete('/notes/delete/:id',async (req,res) => {
+router.delete('/notes/delete/:id', isAuthenticated, async (req,res) => {
     await Note.findByIdAndRemove(req.params.id);
     req.flash('success_msg', 'Sugerencia eliminada ');
     res.redirect('/notes');
