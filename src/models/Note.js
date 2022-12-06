@@ -1,4 +1,3 @@
-const Handlebars = require('handlebars')
 const mongoose = require ('mongoose');
 const { Schema } = mongoose;
 //Aquí le estoy diciendo como van a lucier mis datos
