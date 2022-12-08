@@ -21,8 +21,8 @@
     body{
     margin: 0;
     padding: 0;
-    background: url(https://p4.wallpaperbetter.com/wallpaper/536/858/489/cerveza-vaso-wallpaper-preview.jpg) no-repeat center top;
-    background-size: cover;
+    background: url(https://i.pinimg.com/564x/d6/fb/fb/d6fbfb5c8511535f3540f6b3fc30e6a3.jpg) repeat center top;
+    /*background-size: cover;*/
     font-family: sans-serif;
     height: 80vh;
 }
@@ -101,3 +101,134 @@
     color: #fff;
 }
 /*Aquí termina la parte para el login*/
+
+/*PADDING para imagenes*/
+
+/*Estilos para mi chat*/
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.header{
+    width: 100%;
+    height: 40px;
+    background: #060e79;
+}
+
+.ctn-header{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    top: 5px;
+}
+.lbl-header{
+    font-family: cursive;
+    font-size: 20px;
+}
+.ctn-data{
+    width: 90%;
+    margin: auto;
+}
+.p-data{
+    font-family: Arial;
+    font-size: 18px;
+    position: relative;
+    margin-top: 5%;
+    background: rgb(247, 242, 1);
+}
+.ctn-lbl-comentar{
+    width: 100%;
+    text-align: center;
+}
+.lbl-comentario{
+    font-family: cursive;
+    font-size: 20px;
+
+    text-shadow: 1px 2px 1px rgb(29, 56, 241);
+}
+
+/*Div index
+.div-index{
+      height: 100px;
+      max-width: 5000px ;
+    }
+    */
+
+/*Estilos del footer*/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+/*:::::Pie de Pagina*/
+.pie-pagina{
+    width: 100%;
+    background-color: #0a141d;
+}
+.pie-pagina .grupo-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:50px;
+    padding: 45px 0px;
+}
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pie-pagina .grupo-1 .box figure img{
+    width: 250px;
+}
+.pie-pagina .grupo-1 .box h2{
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+}
+.pie-pagina .grupo-1 .red-social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 10px;
+    background-color: #0d2033;
+    text-align: center;
+    transition: all 300ms ease;
+}
+.pie-pagina .grupo-1 .red-social a:hover{
+    color: aqua;
+}
+.pie-pagina .grupo-2{
+    background-color: #0a1a2a;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+.pie-pagina .grupo-2 small{
+    font-size: 15px;
+}
+@media screen and (max-width:800px){
+    .pie-pagina .grupo-1{
+        width: 90%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap:30px;
+        padding: 35px 0px;
+    }
+}
+
+/*Final estilos del footer*/
