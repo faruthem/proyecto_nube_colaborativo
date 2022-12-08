@@ -1,7 +1,7 @@
 {{#if error}}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   {{error}}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+  <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -10,7 +10,7 @@
 {{#each errors}} {{!-- {{Validación de nuestros datos con each, si existe un error recorre ese arreglo de errores y por cada recorrido me generas un alert}} --}}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   {{text}}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+  <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
