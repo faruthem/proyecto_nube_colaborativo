@@ -1,0 +1,119 @@
+<div class="card text-center">
+  <div class="card-header">
+    FerretBeer
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Datos curiosos</h5>
+    <p class="card-text">
+        <div class="container" align="justify">
+
+            <p class="card-text" align="justify" > 
+          <b>1- El origen: </b>
+          Se considera que la palabra cerveza viene de Celia o ceria,
+           en honor a la diosa Ceres. Ceres, diosa de la mitología romana era la dispensadora
+            de la fecundidad, protectora de la agricultura y los granos sagrados.
+              <br>
+              <br>
+            <b>2. Ahogados en cerveza: </b>
+          En la antigua Babilonia se veneraba la cerveza hasta tal punto, que si en la elaboración
+           algo salía mal y la cerveza era de mala calidad, castigaban al culpable ahogándolo en el
+            propio barril de cerveza.
+              <br>
+              <br>
+            <b>3.- Una cabra productora de cerveza: </b>
+          Los vikingos creían que en el Valhalla, el paraíso que esperaban tras la muerte, les esperaría
+           una cabra gigante que les suministraría eternamente de cerveza. ¡Ojalá!
+           <div class="card" >
+              <img src="https://www.cultura.gob.ar/media/uploads/botella.jpg" alt="cheve">
+           </div>
+            <br>
+            <br>
+          <b>4.- Que la espuma nunca termine: </b>
+          A pesar de las diversas creencias sobre la espuma de la cerveza, lo cierto es que una espuma 
+          voluminosa es signo de una cerveza de buena calidad. Es más, la espuma no debería desaparecer 
+          en ningún momento, ni siquiera al terminar el vaso.
+            <br>
+            <br>
+            <b>5.- Los egipcios cobraban con cerveza: </b>
+          Los obreros egipcios que se encargaban de la construcción de las pirámides egipcias recibían 
+          una parte de su paga en cerveza.
+            <br>
+            <br>
+            <b>6.- Importancia de la calidad del agua: </b>
+            Más del 80% de una cerveza está compuesta por agua, por lo que el sabor de la cerveza depende 
+            mucho de la calidad del agua utilizada para su elaboración. Por este motivo, hay muchos tipos 
+            de cerveza que cambian de variedad por el tipo de agua que contenga.
+            <div class="card" >
+              <img src="https://phantom-marca.unidadeditorial.es/d3f8ebeaf6b8e80be47a7f2e35549a76/resize/1320/f/jpg/assets/multimedia/imagenes/2022/08/11/16602347276790.jpg" alt="cheve">
+           </div>
+            <br>
+            <br>
+            En la Edad Media, debido a la escasez de agua potable, había un porcentaje muy alto de la población
+            que bebía cerveza en lugar del agua porque gracias al alcohol se aseguraban la potabilidad de la bebida.
+            <br>
+            <br>
+            <b>7.- Expertas cerveceras: </b>
+            Actualmente, la cerveza es una bebida consumida tanto por hombres como por mujeres, pero en sus orígenes 
+            las únicas expertas cerveceras eran las mujeres. Incluso durante el siglo XIX se creía que el consumo de 
+            la cerveza era beneficioso para una buena lactancia materna.
+            <br>
+            <br>
+            <b>8.- la cerveza tiene beneficios para salud: </b>
+            Si estás leyendo este post, seguramente será porque eres amante de la cerveza, por lo que te alegrará 
+            saber que un consumo moderado de esta bebida tiene beneficios para la salud.
+            Ayuda a combatir ciertas enfermedades cardiacas, a mejorar la densidad ósea o a prevenir la osteoporosis. Además, 
+            protege del desarrollo de enfermedades neurodegenerativas como el Alzheimer debido a uno de sus componentes, el silicio.
+            <br>
+            <br>
+            Otro de los componentes del lúpulo de la cerveza es el xanthohumol, un antioxidante que previene la aparición de células 
+            cancerosas. También previene la anemia, elimina la retención de líquidos y evita los problemas renales.
+            <br>
+            <br>
+            Estos son sólo algunos de los principales beneficios de esta bebida, pero… ¡tiene muchos más! En nuestro blog podrás encontrar  
+            un artículo sobre la relación entre cerveza y el deporte que también te interesará.
+            <br>
+            <br>
+            <div class="card" >
+              <img src="https://thefoodtech.com/wp-content/uploads/2020/05/cerveza.jpg" alt="cheve">
+           </div>
+            <b>9.- Pan o cerveza: </b>
+            En sus orígenes, la cerveza era harina de cereal fermentada de la misma manera que el pan. 
+            La diferencia radicaba en la proporción de agua. Si había más harina que agua, se producía pan. 
+            Pero si por el contrario contaban con más agua que harina, elaboraban cerveza. El nombre que usaban para denominar a la 
+            cerveza era “pan líquido” y en muchos casos lo que se hacía era elaborar pan y después de hornearlo, sumergirlo en agua 
+            para que fermentase.
+            <br>
+            <br>
+            <b>10.- a falta de champú, cerveza: </b>
+            La cerveza tiene propiedades que rizan el pelo, debido a los activos de la levadura y la cebada, ya que aportan una 
+            gran cantidad de minerales que refuerzan la queratina e hidratan el cabello, otorgándole un sorprendente brillo. 
+            También es de destacar que los expertos recomiendan la levadura de cerveza para paliar la caída del pelo.
+           </p>
+           
+          <!--Aquí comienza mi comentadero-->
+            <div>
+              
+              {{#if user}}
+              <div id="fb-root"></div>
+                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v15.0" nonce="GyFwIHSZ"></script>
+                <div class="ctn-data">
+                  <h3 style="text-align: center;" >Hola {{user.name}} bienvenido. </h3>
+                  <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="1"></div>
+                </div>
+                {{else}}
+                <div style="text-align: center;">
+                  <h3>¿quieres comentar?</h3>
+                  <a href="/users/signin" class="btn btn-dark btn-lg active" role="button" aria-pressed="true" >Ingresar</a>
+                  <br>
+                  <br>
+                  <a href="/users/signup" class="btn btn-dark btn-lg active" role="button" aria-pressed="true" >Registrarse</a>
+                </div>
+                {{/if}}
+
+
+            </div>
+          <!--aquí termina el comentadero
+</div>
+</div>
+
+
