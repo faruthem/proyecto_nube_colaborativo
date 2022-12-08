@@ -7,10 +7,10 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title d-flex justify-content-between align-items-center">
-                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-edit"></i></a>
+                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-edit"></i></a>   {{!--name por _id--}}
                 </h4>
                 <p>{{description}}</p>
-                <form action="/notes/delete/{{_id}}?_method=DELETE" method="post">
+                <form action="/notes/delete/{{_id}}?_method=DELETE" method="post">              {{!--name por _id--}}
                     <input type="hidden" name="_method" value="DELETE">
                                     <button class="btn btn-danger btn-block btn-sm" type="submit">{{!botón }}
                                          Borrar
@@ -24,11 +24,12 @@
            <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h1>Hola {{user.name}} </h1>
-            <p class="card-text">No hay quejas ni sugerencias ¿FELICIDAD, ERES TÚ?</p>
+            <p class="card-text">No hay quejas ni sugerencias,</p>
+            <br>
+            <p>¿FELICIDAD, ERES TÚ?</p>
             <a href="/notes/add" class="btn btn-success btn-block"> Sugerir siempre es bueno, intentalo</a>
         </div>
     </div>     
     </div>
-
    {{/each}}
 </div>
