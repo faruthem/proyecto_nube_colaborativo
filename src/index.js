@@ -18,7 +18,7 @@ app.set('port', process.env.PORT || 3000); // process.env.PORT = si existe un pu
 app.set('views', path.join(__dirname, 'views'));//Le digo donde están las vistas y concateno con _dirname 
 
 app.engine('.hbs', exphbs.engine({ //Configuramos como vamos a utilizar las vistas con plantillas o diseños
-    defaultLayout:'main',
+    defaultLayout:'main.hbs',
     layoutsDir: path.join(app.get('views'), 'layouts'), // dirección para que encuentre layouts / main
     partialsDir: path.join(app.get('views'), 'partials'),// dirección para que encuentre layouts / main/partials
     extname: '.hbs', //Dirección/extensión de mis archivos
