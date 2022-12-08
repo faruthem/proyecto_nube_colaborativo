@@ -31,7 +31,7 @@ router.post('/notes/new-note',isAuthenticated, async (req,res) => {// agregando 
     }else{
         //res.send('Sugerencia enviada');
         const newNote = new Note({title, description});
-        newNote.user = req.user.id;//sugerencias enlazadas con cada usuario
+        newNote.user = req.user._id;//sugerencias enlazadas con cada usuario   //Cambié id por name -- corección por correo
         //console.log(newNote);
         await newNote.save(); // Le agrego away para que se haga asincrono
         req.flash('success_msg','Sugerencia agregada')
@@ -41,22 +41,24 @@ router.post('/notes/new-note',isAuthenticated, async (req,res) => {// agregando 
     
 });
 //ruta para enviar datos
-router.get('/notes', isAuthenticated, async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
-   const notes = await Note.find({user: req.user.id}).sort({date: 'desc'});// SE agregó. lean para que handlebars me permita visualizar estos datos
-   res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
-    //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
-    //res.render('notas')//aquí va a buscar mis notas
+router.get('/notes', isAuthenticated,async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
+        const notes = await Note.find({user: req.user._id}).lean().sort({date: 'desc'});// SE agregó. lean //Se agregó .name para que me pase el nombre por email
+        res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
+         //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
+         //res.render('notas')//aquí va a buscar mis notas
+
+ 
 });
 //Ruta para editar mi buzón de sugerencias 
-router.get('/notes/edit/:id', isAuthenticated, async (req, res)=>{
+router.get('/notes/edit/:id', isAuthenticated, async (req, res)=>{ //Cambie id por email
     const note = await Note.findById(req.params.id).lean();//Agregué lean para que me mande los datos
     res.render('notes/edit-note',{note});
 });
 
 // Ruta de edición de mi buzón de sugerencias por metodo put
-router.put('/notes/edit-note/:id', isAuthenticated, async (req,res) => {
+router.put('/notes/edit-note/:id', isAuthenticated, async (req,res) => { //Cambie id por email
     const {title,description}= req.body;
-    await Note.findByIdAndUpdate(req.params.id,{title,description});
+    await Note.findByIdAndUpdate(req.params.id,{title,description}).lean();//Aquí puse lean, si no sirve lo quitamos
     req.flash('success_msg', 'Sugerencia modificada');
     res.redirect('/notes');
 });
