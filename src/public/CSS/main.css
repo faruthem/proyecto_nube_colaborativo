@@ -157,7 +157,6 @@
     */
 
 /*Estilos del footer*/
-
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 *{
     margin: 0;
@@ -169,6 +168,9 @@
 .pie-pagina{
     width: 100%;
     background-color: #0a141d;
+    /*height: 100px;*/
+    /*position: absolute;*/
+    /*left: 0;*/
 }
 .pie-pagina .grupo-1{
     width: 100%;
