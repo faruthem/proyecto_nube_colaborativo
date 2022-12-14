@@ -5,6 +5,8 @@ const router = express.Router(); // ejecuta método  Router= creación de rutas
 const Note = require('../models/Note');
 
 const { isAuthenticated } = require('../helpers/auth');//Revisa si estoy logiado y si no me redirige
+const User = require('../models/User');
+const { db } = require('../models/Note');
 
 //Aquí comienzo a crear mi formulario
 router.get('/notes/add', isAuthenticated, (req,res)=>{
@@ -40,7 +42,27 @@ router.post('/notes/new-note',isAuthenticated, async (req,res) => {// agregando 
     }
     
 });
-//ruta para enviar datos
+
+//Note.validate
+//DESCOMENTA ESTO SI HAY PROBLEMAS
+// AREA DE PRUEBAS
+
+//if( User.email === 'kevinL@gmail.com' ){
+    //console.log(User.findOne({email:'kevinL@gmail.com'}));
+//    router.get('/notes',isAuthenticated, async(req, res) =>{
+//    const notes = await Note.find().lean().sort({date: 'desc'});
+//    res.render('notes/all-notes', {notes});
+//});
+//}else{
+//    router.get('/notes', isAuthenticated,async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
+//        const notes = await Note.find({user: req.user._id}).lean().sort({date: 'desc'});// SE agregó. lean //Se agregó .name para que me pase el nombre por email
+//        res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
+         //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
+         //res.render('notas')//aquí va a buscar mis notas
+//});    
+//}
+// AREA DE PRUEBAS
+//ruta para enviar datos a comentar
 router.get('/notes', isAuthenticated,async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
         const notes = await Note.find({user: req.user._id}).lean().sort({date: 'desc'});// SE agregó. lean //Se agregó .name para que me pase el nombre por email
         res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
