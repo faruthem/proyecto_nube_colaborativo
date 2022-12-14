@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const session = require('express-session'); //Para mis sesiones
 const flash = require('connect-flash'); //Esto nos sirve para las alertas
 const passport = require('passport');//Esto nos sirve para el login
-//inicializaciones de código, contantes
+//inicializaciones de código, constantes
 const app = express(); //Lo almacenamos en una constante app
 require('./database'); //inicializamos la base de datos <--------- aquí se da el mensaje ji ji ji
 require('./config/passport'); //Vamos a utilizar o llamar a nuestra autenticación
@@ -39,7 +39,7 @@ app.use(passport.session());//Utilizo la sesion de arriba definida por express
 app.use(flash());//Esto es para poder usar flash y poder mandar esas alertas 
 
 //Variables globales (poder colocar datos que queremos que estén accesibles desde cualquier parte del server)
-//Variable globarl que almacena mensajes flash
+//Variable global que almacena mensajes flash
 app.use((req,res,next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
@@ -54,7 +54,8 @@ app.use((req,res,next) => {
 app.use(require('./routes/index')); //rutas de servidor
 app.use(require('./routes/notes')); //rutas de servidor
 app.use(require('./routes/users')); //rutas de servidor
-
+app.use(require('./routes/products')); //rutas de servidor
+//app.use(require('./pdf')); //ruta de mi PDF
 
 
 //Static Files (dirección archivos estáticos)
