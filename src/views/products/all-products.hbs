@@ -1,35 +1,41 @@
-{{!--//Aquí se listan los productos : D--}}
+<div class="container">
 
-{{!--//Aokay gente vamos a pintar nuestras notas: D--}}
-<div class="row">
-   {{#each products}} {{!con each recorremos nuestro arreglo buzón de sugerencia}}
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title d-flex justify-content-between align-items-center">
-                    {{title}} <a href="/products/edit/{{_id}}"><i class="fa fa-edit"></i></a>   {{!--name por _id--}}
-                </h4>
-                <p>{{description}}</p>
-                <form action="/products/delete/{{_id}}?_method=DELETE" method="post">              {{!--name por _id--}}
-                    <input type="hidden" name="_method" value="DELETE">
-                                    <button class="btn btn-danger btn-block btn-sm" type="submit">{{!botón }}
-                                         Borrar
-                                    </button>
-                </form>
+    <div class="row btn-block btn-sm">
+        <div class="col">
+            <h2 style="color: white;">Tienes {{products.length}} productos</h2>
+            <a href="/news" class="btn btn-primary active" aria-current="page">Vamos allá</a>
+        </div>
+    </div>
+    <div class="row">
+        {{#each products}}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-between align-items-center">
+                        {{title}} <a href="/products/edit/{{_id}}"><i class="fa fa-edit"></i></a>
+                    </h4>
+                    <p>{{description}}</p>
+                    <form action="/products/delete/{{_id}}?_method=DELETE" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger btn-block btn-sm" type="submit">
+                            Borrar
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    {{else}}
-    <div class="container-max-widths">
-           <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h1>Hola {{user.name}} </h1>
-            <p class="card-text">No hay productos,</p>
-            <br>
-            <p>¿FELICIDAD, ERES TÚ?</p>
-            <a href="/products/add" class="btn btn-success btn-block"> ¿quieres agregar?</a>
+        {{else}}
+        <div class="container-max-widths">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h1>Hola {{user.name}}</h1>
+                    <p class="card-text">No hay productos.</p>
+                    <br>
+                    <p>¿FELICIDAD, ERES TÚ?</p>
+                    <a href="/products/add" class="btn btn-success btn-block">¿Quieres agregar?</a>
+                </div>
+            </div>
         </div>
-    </div>     
+        {{/each}}
     </div>
-   {{/each}}
 </div>

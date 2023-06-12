@@ -36,4 +36,6 @@ router.get('/datos', (req, res) => {
     //res.send('baia baia es mi artesanal poderoso');
     res.render('datos.hbs');
 });
+
+//Imagenes
 module.exports = router;

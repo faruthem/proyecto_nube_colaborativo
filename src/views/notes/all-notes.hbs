@@ -1,35 +1,110 @@
 {{!--//Aquí se listan todas las quejas y sugerencias : D--}}
 
 {{!--//Aokay gente vamos a pintar nuestras notas: D--}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="row btn-block btn-sm">
+    <div class="col">
+        <h2 style="color: white;">Tienes {{notes.length}} sugerencias</h2>
+        <a href="/news" class="btn btn-primary active" aria-current="page">Vamos allá</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="col-md-6">
+
+                    <!-- Aquí puedes colocar el resto de tu contenido -->
+                    <container>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                        <head>
+                            <title>Gráfico de pastel</title>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        </head>
+
+                        <body>
+                            <canvas id="myChart"></canvas>
+                            <script>
+                                // Obtén el contexto del lienzo
+                                var ctx = document.getElementById('myChart').getContext('2d');
+
+                                // Define los datos para el gráfico
+                                var data = {
+                                    labels: ['Productos', 'Sugerencias'],
+                                    datasets: [{
+                                        label: 'Cantidad',
+                                        data: [{{ products.length }}, {{ notes.length }}],
+                                    backgroundColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                                    borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                                    borderWidth: 1,
+                }],
+            };
+
+                                // Configura las opciones del gráfico
+                                var options = {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            precision: 0,
+                                        },
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            labels: {
+                                                color: 'white',
+                                                font: {
+                                                    size: 16,
+                                                },
+                                            },
+                                        },
+                                    },
+                                };
+
+                                // Crea el gráfico de pastel
+                                var myChart = new Chart(ctx, {
+                                    type: 'pie',
+                                    data: data,
+                                    options: options,
+                                });
+                            </script>
+                        </body>
+                    </container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
-   {{#each notes}} {{!con each recorremos nuestro arreglo buzón de sugerencia}}
+    {{#each notes}} {{!con each recorremos nuestro arreglo buzón de sugerencia}}
     <div class="col-md-3">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title d-flex justify-content-between align-items-center">
-                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-edit"></i></a>   {{!--name por _id--}}
+                    {{title}} <a href="/notes/edit/{{_id}}"><i class="fa fa-edit"></i></a> {{!--name por _id--}}
                 </h4>
                 <p>{{description}}</p>
-                <form action="/notes/delete/{{_id}}?_method=DELETE" method="post">              {{!--name por _id--}}
+                <form action="/notes/delete/{{_id}}?_method=DELETE" method="post"> {{!--name por _id--}}
                     <input type="hidden" name="_method" value="DELETE">
-                                    <button class="btn btn-danger btn-block btn-sm" type="submit">{{!botón }}
-                                         Borrar
-                                    </button>
+                    <button class="btn btn-danger btn-block btn-sm" type="submit">{{!botón }}
+                        Borrar
+                    </button>
                 </form>
             </div>
         </div>
     </div>
+    <br>
+
     {{else}}
     <div class="container-max-widths">
-           <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h1>Hola {{user.name}} </h1>
-            <p class="card-text">No hay quejas ni sugerencias,</p>
-            <br>
-            <p>¿FELICIDAD, ERES TÚ?</p>
-            <a href="/notes/add" class="btn btn-success btn-block"> Sugerir siempre es bueno, intentalo</a>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h1>Hola {{user.name}} </h1>
+                <p class="card-text">No hay quejas ni sugerencias,</p>
+                <br>
+                <p>¿FELICIDAD, ERES TÚ?</p>
+                <a href="/notes/add" class="btn btn-success btn-block"> Sugerir siempre es bueno, intentalo</a>
+            </div>
         </div>
-    </div>     
     </div>
-   {{/each}}
+    {{/each}}
 </div>
