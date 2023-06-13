@@ -1,29 +1,65 @@
-//Aqui vienene las rutas de mi servidor para que el usuaio pueda crear o manejar sus notas (crear, eliminar, actualizar)
 const express = require('express');
-const router = express.Router(); // ejecuta método  Router= creación de rutas
-//requiero mis esquemas para almacenarlos
+const router = express.Router();
+const multer = require('multer'); // Importa multer
+const fs = require('fs'); // Importa el módulo fs para trabajar con archivos
+const cloudinary = require('cloudinary').v2;
+
+
+
+cloudinary.config({
+    cloud_name: "dofiqshb8",
+    api_key: "483757338352375",
+    api_secret: "rY3OkyHGuJzf7neu03hSXMy_3vo"
+})
+
+const storage = multer.diskStorage({ // Configura el almacenamiento en disco para las imágenes
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Directorio donde se guardarán las imágenes cargadas uploads/
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname); // Genera un nombre de archivo único basado en la fecha y el nombre original del archivo
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 1024 * 1024 * 5 }//Limite a 5 MB
+}); // Crea una instancia de multer con la configuración de almacenamiento
+
 const Product = require('../models/Product');
-
-const { isAuthenticated } = require('../helpers/auth');//Revisa si estoy logiado y si no me redirige
+const { isAuthenticated } = require('../helpers/auth');
 const User = require('../models/User');
-const { db } = require('../models/Product');
 
-//Aquí comienzo a crear mi formulario
+//agregué
+router.get('/products/tienda', async (req, res) => {
+    try {
+        const products = await Product.find().lean();
+        res.render('products/tienda', { products });
+    } catch (error) {
+        console.error(error);
+        // Manejo del error, redireccionamiento o respuesta apropiada
+    }
+});
+//agregué
+
 router.get('/products/add', isAuthenticated, (req, res) => {
     res.render('products/new-product');
 });
-//Aquí termino a crear mi formulario
 
-//ruta para enviar datos
-router.post('/products/new-product', isAuthenticated, async (req, res) => {// agregando async digo que va a ser un proceso asincrono 
-    const { title, description } = req.body;
+//Si algo sale mal borra esto
+// Borrar aquí 
+
+router.post('/products/new-product', isAuthenticated, upload.single('image'), async (req, res) => {
+    const { title, description, precio } = req.body;
     const errors = [];
+
     if (!title) {
         errors.push({ text: 'Por favor escribe un nombre para tu producto' });
     }
     if (!description) {
         errors.push({ text: 'Por favor escribe una descripción para tu producto' });
     }
+
     if (errors.length > 0) {
         res.render('products/new-product', {
             errors,
@@ -31,44 +67,85 @@ router.post('/products/new-product', isAuthenticated, async (req, res) => {// ag
             description
         });
     } else {
-        //res.send('Sugerencia enviada');
-        const newProduct = new Product({ title, description });
-        newProduct.user = req.user._id;//sugerencias enlazadas con cada usuario   //Cambié id por name -- corección por correo
-        //console.log(newNote);
-        await newProduct.save(); // Le agrego away para que se haga asincrono
-        req.flash('success_msg', 'Sugerencia agregada')
-        //res.send('Sugerencia enviada y recibida');
-        res.redirect('/products')
+        try {
+
+            const result = await cloudinary.uploader.upload(req.file.path);
+            const newProduct = new Product({
+                title,
+                description,
+                precio,
+                image: {
+                    url: result.secure_url,
+                    public_id: result.public_id
+                }
+            });
+            newProduct.user = req.user._id;
+            await newProduct.save();
+
+            req.flash('success_msg', 'Producto agregado');
+            res.redirect('/products');
+            // Eliminar archivo de la carpeta "uploads"
+            fs.unlinkSync(req.file.path);
+
+        } catch (error) {
+            console.error(error);
+            // Manejo del error, redireccionamiento o respuesta apropiada
+        }
     }
-
 });
-//ruta para enviar datos a comentar
-router.get('/products', isAuthenticated, async (req, res) => { // Cuidado gente!! estamos frente a un proceso asincrono O.O
-    const products = await Product.find({ user: req.user._id }).lean().sort({ date: 'desc' });// SE agregó. lean //Se agregó .name para que me pase el nombre por email
-    res.render('products/all-products', { products }); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
-    //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
-    //res.render('notas')//aquí va a buscar mis notas
 
-
+router.get('/products', isAuthenticated, async (req, res) => {
+    try {
+        const products = await Product.find({ user: req.user._id }).lean().sort({ precio: 1 });
+        res.render('products/all-products', { products });
+    } catch (error) {
+        console.error(error);
+        // Manejo del error, redireccionamiento o respuesta apropiada
+    }
 });
-//Ruta para editar mi buzón de sugerencias 
-router.get('/products/edit/:id', isAuthenticated, async (req, res) => { //Cambie id por email
-    const product = await Product.findById(req.params.id).lean();//Agregué lean para que me mande los datos
+
+
+
+router.get('/products/edit/:id', isAuthenticated, async (req, res) => {
+    const product = await Product.findById(req.params.id).lean();
     res.render('products/edit-product', { product });
 });
 
-// Ruta de edición de mi buzón de sugerencias por metodo put
-router.put('/products/edit-product/:id', isAuthenticated, async (req, res) => { //Cambie id por email
-    const { title, description } = req.body;
-    await Product.findByIdAndUpdate(req.params.id, { title, description }).lean();//Aquí puse lean, si no sirve lo quitamos
-    req.flash('success_msg', 'producto agregado');
-    res.redirect('/Products');
+router.put('/products/edit-product/:id', isAuthenticated, upload.single('image'), async (req, res) => {
+    const { title, description, precio } = req.body;
+    const image = req.file;
+
+    try {
+        let updatedProduct = {
+            title,
+            description,
+            precio
+        };
+
+        if (image) {
+            // Procesa y almacena la nueva imagen si se proporciona
+            const result = await cloudinary.uploader.upload(image.path);
+            updatedProduct.image = {
+                url: result.secure_url,
+                public_id: result.public_id
+            };
+            // Elimina la imagen anterior de Cloudinary
+            await cloudinary.uploader.destroy(req.body.imagePublicId);
+        }
+
+        await Product.findByIdAndUpdate(req.params.id, updatedProduct);
+        req.flash('success_msg', 'Producto actualizado');
+        res.redirect('/products');
+    } catch (error) {
+        console.error(error);
+        // Manejo del error, redireccionamiento o respuesta apropiada
+    }
 });
 
-// Ruta de eliminación de mi buzón de sugerencias
 router.delete('/products/delete/:id', isAuthenticated, async (req, res) => {
     await Product.findByIdAndRemove(req.params.id);
-    req.flash('success_msg', 'Producto eliminado ');
+    req.flash('success_msg', 'Producto eliminado');
     res.redirect('/products');
 });
+
 module.exports = router;

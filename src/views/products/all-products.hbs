@@ -1,9 +1,7 @@
 <div class="container">
-
     <div class="row btn-block btn-sm">
         <div class="col">
             <h2 style="color: white;">Tienes {{products.length}} productos</h2>
-            <a href="/news" class="btn btn-primary active" aria-current="page">Vamos allá</a>
         </div>
     </div>
     <div class="row">
@@ -15,6 +13,9 @@
                         {{title}} <a href="/products/edit/{{_id}}"><i class="fa fa-edit"></i></a>
                     </h4>
                     <p>{{description}}</p>
+                    <p>Precio: ${{precio}}</p>
+                    <img src="{{image.url}}" alt="Product Image" class="img-fluid">
+
                     <form action="/products/delete/{{_id}}?_method=DELETE" method="post">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="btn btn-danger btn-block btn-sm" type="submit">

@@ -1,26 +1,31 @@
 <div class="col-md-4 mx-auto">
-    <div class="card" >
+    <div class="card">
         <div class="card-header">
             <h3>Editar mi producto</h3>
         </div>
-            <div class="card-body">
-                <form action="/products/edit-product/{{product._id}}?_method=PUT" method="POST">{{!Aqui es a donde me va a mandar}}
-                   <input type="hidden" name="_method" value="PUT"> {{!Servidor sabe que enviamos un método put}}
-                    <div class="form-group">
-                        <input type="text" name="title"class="form-control" placeholder="Titulo"
-                        value="{{product.title}}">
-                    </div>
-                    <div class="form-group">
-                        <textarea name="description" class="form-control" placeholder="Descripción">
-                            {{product.description}}
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block" type="submit">
-                            Guardar
-                        </button>
-                    </div>
-                </form>
+        <div class="card-body">
+            <form action="/products/edit-product/{{product._id}}?_method=PUT" method="POST"
+                enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" placeholder="Título" value="{{product.title}}">
+                </div>
+                <div class="form-group">
+                    <textarea name="description" class="form-control"
+                        placeholder="Descripción">{{product.description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Imagen</label>
+                    <input type="file" name="image" class="form-control-file" accept="image/*">
+                    {{#if product.image}}
+                    <input type="hidden" name="imagePublicId" value="{{product.image.public_id}}">
+                    <img src="{{product.image.url}}" alt="Product Image" class="img-fluid">
+                    {{/if}}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

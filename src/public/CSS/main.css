@@ -18,10 +18,10 @@
 }*/
 
 /*Esta parte es para el login*/
-    body{
+body {
     margin: 0;
     padding: 0;
-    background: url(https://i.pinimg.com/564x/d6/fb/fb/d6fbfb5c8511535f3540f6b3fc30e6a3.jpg) repeat center top;
+    background: url(https://i.pinimg.com/564x/b3/d8/d5/b3d8d55e38b7ac13818822c2892bcb03.jpg) repeat center top;
     /*background-size: cover;*/
     font-family: sans-serif;
     height: 80vh;
@@ -39,6 +39,7 @@
     box-sizing: border-box;
     padding: 70px 30px;
 }
+
 .login-box .avatar {
     width: 100px;
     height: 100px;
@@ -48,7 +49,7 @@
     left: calc(50%-50px);
 }
 
-.login-box h1{
+.login-box h1 {
     margin: 0;
     padding: 0 0 20px;
     text-align: center;
@@ -79,7 +80,7 @@
     font-size: 16px;
 }
 
-.login-box input[type="submit"]{
+.login-box input[type="submit"] {
     border: none;
     outline: none;
     height: 40px;
@@ -100,49 +101,55 @@
 .login-box a:hover {
     color: #fff;
 }
+
 /*Aquí termina la parte para el login*/
 
 /*PADDING para imagenes*/
 
 /*Estilos para mi chat*/
 
-*{
+* {
     margin: 0px;
     padding: 0px;
 }
 
-.header{
+.header {
     width: 100%;
     height: 40px;
     background: #060e79;
 }
 
-.ctn-header{
+.ctn-header {
     width: 100%;
     height: 30px;
     text-align: center;
     top: 5px;
 }
-.lbl-header{
+
+.lbl-header {
     font-family: cursive;
     font-size: 20px;
 }
-.ctn-data{
+
+.ctn-data {
     width: 90%;
     margin: auto;
 }
-.p-data{
+
+.p-data {
     font-family: Arial;
     font-size: 18px;
     position: relative;
     margin-top: 5%;
     background: rgb(247, 242, 1);
 }
-.ctn-lbl-comentar{
+
+.ctn-lbl-comentar {
     width: 100%;
     text-align: center;
 }
-.lbl-comentario{
+
+.lbl-comentario {
     font-family: cursive;
     font-size: 20px;
 
@@ -158,49 +165,57 @@
 
 /*Estilos del footer*/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
 }
+
 /*:::::Pie de Pagina*/
-.pie-pagina{
+.pie-pagina {
     width: 100%;
     background-color: #0a141d;
     /*height: 100px;*/
     /*position: absolute;*/
     /*left: 0;*/
 }
-.pie-pagina .grupo-1{
+
+.pie-pagina .grupo-1 {
     width: 100%;
     max-width: 1200px;
     margin: auto;
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap:50px;
+    grid-gap: 50px;
     padding: 45px 0px;
 }
-.pie-pagina .grupo-1 .box figure{
+
+.pie-pagina .grupo-1 .box figure {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.pie-pagina .grupo-1 .box figure img{
+
+.pie-pagina .grupo-1 .box figure img {
     width: 250px;
 }
-.pie-pagina .grupo-1 .box h2{
+
+.pie-pagina .grupo-1 .box h2 {
     color: #fff;
     margin-bottom: 25px;
     font-size: 20px;
 }
-.pie-pagina .grupo-1 .box p{
+
+.pie-pagina .grupo-1 .box p {
     color: #efefef;
     margin-bottom: 10px;
 }
-.pie-pagina .grupo-1 .red-social a{
+
+.pie-pagina .grupo-1 .red-social a {
     display: inline-block;
     text-decoration: none;
     width: 45px;
@@ -212,23 +227,27 @@
     text-align: center;
     transition: all 300ms ease;
 }
-.pie-pagina .grupo-1 .red-social a:hover{
+
+.pie-pagina .grupo-1 .red-social a:hover {
     color: aqua;
 }
-.pie-pagina .grupo-2{
+
+.pie-pagina .grupo-2 {
     background-color: #0a1a2a;
     padding: 15px 10px;
     text-align: center;
     color: #fff;
 }
-.pie-pagina .grupo-2 small{
+
+.pie-pagina .grupo-2 small {
     font-size: 15px;
 }
-@media screen and (max-width:800px){
-    .pie-pagina .grupo-1{
+
+@media screen and (max-width:800px) {
+    .pie-pagina .grupo-1 {
         width: 90%;
         grid-template-columns: repeat(1, 1fr);
-        grid-gap:30px;
+        grid-gap: 30px;
         padding: 35px 0px;
     }
 }
@@ -237,7 +256,9 @@
 
 /*Logo BeerFerret*/
 .logo-BeerFerret {
-    width: 100%;/*ancho*/
-    
+    width: 100%;
+    /*ancho*/
+
 }
+
 /*Logo BeerFerret*/

@@ -1,0 +1,22 @@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {{#each products}}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title" style="text-align: center;">{{title}}</h5>
+                <p class="card-text" style="text-align: justify;">{{description}}</p>
+            </div>
+            <div class="card-footer" style="text-align: center;">
+                <div class="btn-group">
+                    <a href="#" class="btn btn-primary">Precio ${{precio}}</a>
+                    <form action="/products/delete/{{_id}}?_method=DELETE" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('¿Estás seguro de que desea comprar este producto?')">COMPRAR</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

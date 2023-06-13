@@ -7,9 +7,13 @@ const session = require('express-session'); //Para mis sesiones
 const flash = require('connect-flash'); //Esto nos sirve para las alertas
 const passport = require('passport');//Esto nos sirve para el login
 
-//const controllers = require("./Controllers/DeleteProduct");//Requerimos los controladores
-//const cors = require("cors");
-//const db = require("./database");
+
+//Agregué productos <--- quitar si da error
+const { products } = require('./routes/products');
+
+
+//Aquí van las URL de mi página principal, ejemplo /about
+const router = express.Router(); // ejecuta método  Router= creación de rutas
 //inicializaciones de código, constantes
 const app = express(); //Lo almacenamos en una constante app
 require('./database'); //inicializamos la base de datos <--------- aquí se da el mensaje ji ji ji
@@ -28,6 +32,12 @@ app.engine('.hbs', exphbs.engine({ //Configuramos como vamos a utilizar las vist
 }));//
 app.set('view engine', '.hbs');//Configuro motor de las vistas
 //Middlewars (funciones que se ejecutan antes de llegar al servidor)
+//app.use(express.static(path.join(__dirname, 'public')));
+// <---- quitar si da error
+app.use((req, res, next) => {
+    res.locals.products = products;
+    next();
+});
 app.use(express.urlencoded({ extended: false })) //urlencode = decodifica un formulario (como por ejemplo registros tipo email y contraseña)
 app.use(methodOverride('_method'));//Sirve para que los formularios envien otros tipos de metodo, no solo get o post si no también put o delete
 app.use(session({                   //con esto autentico al usuario y guardo su session
@@ -53,8 +63,6 @@ app.use(require('./routes/index')); //rutas de servidor
 app.use(require('./routes/notes')); //rutas de servidor
 app.use(require('./routes/users')); //rutas de servidor
 app.use(require('./routes/products')); //rutas de servidor
-
-//Rutas para imagenes
 
 //Static Files (dirección archivos estáticos)
 app.use(express.static(path.join(__dirname, 'public'))); // estamos ubicando nuestra carpeta public

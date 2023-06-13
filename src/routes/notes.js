@@ -11,13 +11,11 @@ const Note = require('../models/Note');
 const { isAuthenticated } = require('../helpers/auth');//Revisa si estoy logiado y si no me redirige
 const User = require('../models/User');
 const { db } = require('../models/Note');
-
 //Aquí comienzo a crear mi formulario
 router.get('/notes/add', isAuthenticated, (req, res) => {
     res.render('notes/new-note');
 });
 //Aquí termino a crear mi formulario
-
 //ruta para enviar datos
 router.post('/notes/new-note', isAuthenticated, async (req, res) => {// agregando async digo que va a ser un proceso asincrono 
     const { title, description } = req.body;
@@ -44,28 +42,7 @@ router.post('/notes/new-note', isAuthenticated, async (req, res) => {// agregand
         //res.send('Sugerencia enviada y recibida');
         res.redirect('/notes')
     }
-
 });
-
-//Note.validate
-//DESCOMENTA ESTO SI HAY PROBLEMAS
-// AREA DE PRUEBAS
-
-//if( User.email === 'kevinL@gmail.com' ){
-//console.log(User.findOne({email:'kevinL@gmail.com'}));
-//    router.get('/notes',isAuthenticated, async(req, res) =>{
-//    const notes = await Note.find().lean().sort({date: 'desc'});
-//    res.render('notes/all-notes', {notes});
-//});
-//}else{
-//    router.get('/notes', isAuthenticated,async (req, res) =>{ // Cuidado gente!! estamos frente a un proceso asincrono O.O
-//        const notes = await Note.find({user: req.user._id}).lean().sort({date: 'desc'});// SE agregó. lean //Se agregó .name para que me pase el nombre por email
-//        res.render('notes/all-notes', {notes}); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
-//res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
-//res.render('notas')//aquí va a buscar mis notas
-//});    
-//}
-// AREA DE PRUEBAS
 //ruta para enviar datos a comentar
 router.get('/notes', isAuthenticated, async (req, res) => { // Cuidado gente!! estamos frente a un proceso asincrono O.O
     const notes = await Note.find({ user: req.user._id }).lean().sort({ date: 'desc' });// SE agregó. lean //Se agregó .name para que me pase el nombre por email
@@ -74,17 +51,12 @@ router.get('/notes', isAuthenticated, async (req, res) => { // Cuidado gente!! e
     res.render('notes/all-notes', { notes, products }); // Ve a esa ruta y pasale los datos de notes almacenadas en mi base de datos
     //res.send('Buzón de quejas y sugerencias, su opinión es nuestra mortificación.')// texto que se muestra si la solicitud se realizó con exito
     //res.render('notas')//aquí va a buscar mis notas
-
-
-
-
 });
 //Ruta para editar mi buzón de sugerencias 
 router.get('/notes/edit/:id', isAuthenticated, async (req, res) => { //Cambie id por email
     const note = await Note.findById(req.params.id).lean();//Agregué lean para que me mande los datos
     res.render('notes/edit-note', { note });
 });
-
 // Ruta de edición de mi buzón de sugerencias por metodo put
 router.put('/notes/edit-note/:id', isAuthenticated, async (req, res) => { //Cambie id por email
     const { title, description } = req.body;
@@ -92,7 +64,6 @@ router.put('/notes/edit-note/:id', isAuthenticated, async (req, res) => { //Camb
     req.flash('success_msg', 'Sugerencia modificada');
     res.redirect('/notes');
 });
-
 // Ruta de eliminación de mi buzón de sugerencias
 router.delete('/notes/delete/:id', isAuthenticated, async (req, res) => {
     await Note.findByIdAndRemove(req.params.id);
